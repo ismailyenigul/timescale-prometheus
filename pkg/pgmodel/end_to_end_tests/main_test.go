@@ -1,7 +1,7 @@
 // This file and its contents are licensed under the Apache License 2.0.
 // Please see the included NOTICE for copyright information and
 // LICENSE for a copy of the license.
-package pgmodel
+package end_to_end_tests
 
 import (
 	"context"
@@ -19,6 +19,8 @@ import (
 	"github.com/timescale/timescale-prometheus/pkg/log"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
+
+	. "github.com/timescale/timescale-prometheus/pkg/pgmodel"
 )
 
 var (

@@ -1,7 +1,7 @@
 // This file and its contents are licensed under the Apache License 2.0.
 // Please see the included NOTICE for copyright information and
 // LICENSE for a copy of the license.
-package pgmodel
+package end_to_end_tests
 
 import (
 	"context"
@@ -278,7 +278,9 @@ func TestExtensionFunctions(t *testing.T) {
 	withDB(t, *testDatabase, func(db *pgxpool.Pool, t testing.TB) {
 
 		searchPath := ""
-		expected := fmt.Sprintf(`"$user", public, %s, %s, %s, %s`, extSchema, promSchema, metricViewSchema, catalogSchema)
+		// right now the schemas in this test are hardcoded, if we ever allow
+		// user-defined schemas we will need to test those as well
+		expected := `"$user", public, _prom_ext, prom_api, prom_metric, _prom_catalog`
 		err := db.QueryRow(context.Background(), "SHOW search_path;").Scan(&searchPath)
 		if err != nil {
 			t.Fatal(err)
@@ -295,6 +297,7 @@ func TestExtensionFunctions(t *testing.T) {
 			"label_find_key_regex",
 			"label_find_key_not_regex",
 		}
+		extSchema := "_prom_ext"
 		for _, fn := range functions {
 			const query = "SELECT nspname FROM pg_proc LEFT JOIN pg_namespace ON pronamespace = pg_namespace.oid WHERE pg_proc.oid = $1::regproc;"
 			schema := ""
@@ -308,10 +311,10 @@ func TestExtensionFunctions(t *testing.T) {
 		}
 
 		operators := []string{
-			fmt.Sprintf("==(%s.label_key,%s.pattern)", promSchema, promSchema),
-			fmt.Sprintf("!==(%s.label_key,%s.pattern)", promSchema, promSchema),
-			fmt.Sprintf("==~(%s.label_key,%s.pattern)", promSchema, promSchema),
-			fmt.Sprintf("!=~(%s.label_key,%s.pattern)", promSchema, promSchema),
+			"==(prom_api.label_key,prom_api.pattern)",
+			"!==(prom_api.label_key,prom_api.pattern)",
+			"==~(prom_api.label_key,prom_api.pattern)",
+			"!=~(prom_api.label_key,prom_api.pattern)",
 		}
 		for _, opr := range operators {
 			const query = "SELECT nspname FROM pg_operator LEFT JOIN pg_namespace ON oprnamespace = pg_namespace.oid WHERE pg_operator.oid = $1::regoperator;"

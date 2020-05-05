@@ -1,7 +1,7 @@
 // This file and its contents are licensed under the Apache License 2.0.
 // Please see the included NOTICE for copyright information and
 // LICENSE for a copy of the license.
-package pgmodel
+package end_to_end_tests
 
 import (
 	"context"
@@ -13,6 +13,8 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/prometheus/prompb"
+
+	. "github.com/timescale/timescale-prometheus/pkg/pgmodel"
 )
 
 func TestSQLRetentionPeriod(t *testing.T) {
@@ -23,7 +25,7 @@ func TestSQLRetentionPeriod(t *testing.T) {
 		ts := []prompb.TimeSeries{
 			{
 				Labels: []prompb.Label{
-					{Name: metricNameLabelName, Value: "test"},
+					{Name: MetricNameLabelName, Value: "test"},
 					{Name: "test", Value: "test"},
 				},
 				Samples: []prompb.Sample{
@@ -33,7 +35,7 @@ func TestSQLRetentionPeriod(t *testing.T) {
 			},
 			{
 				Labels: []prompb.Label{
-					{Name: metricNameLabelName, Value: "test2"},
+					{Name: MetricNameLabelName, Value: "test2"},
 					{Name: "test", Value: "test"},
 				},
 				Samples: []prompb.Sample{
@@ -115,7 +117,7 @@ func TestSQLDropChunk(t *testing.T) {
 		ts := []prompb.TimeSeries{
 			{
 				Labels: []prompb.Label{
-					{Name: metricNameLabelName, Value: "test"},
+					{Name: MetricNameLabelName, Value: "test"},
 					{Name: "name1", Value: "value1"},
 				},
 				Samples: []prompb.Sample{
@@ -125,7 +127,7 @@ func TestSQLDropChunk(t *testing.T) {
 			},
 			{
 				Labels: []prompb.Label{
-					{Name: metricNameLabelName, Value: "test2"},
+					{Name: MetricNameLabelName, Value: "test2"},
 					{Name: "name1", Value: "value1"},
 				},
 				Samples: []prompb.Sample{
@@ -188,7 +190,7 @@ func TestSQLDropMetricChunk(t *testing.T) {
 			{
 				//this series will be deleted along with it's label
 				Labels: []prompb.Label{
-					{Name: metricNameLabelName, Value: "test"},
+					{Name: MetricNameLabelName, Value: "test"},
 					{Name: "name1", Value: "value1"},
 				},
 				Samples: []prompb.Sample{
@@ -198,7 +200,7 @@ func TestSQLDropMetricChunk(t *testing.T) {
 			},
 			{
 				Labels: []prompb.Label{
-					{Name: metricNameLabelName, Value: "test"},
+					{Name: MetricNameLabelName, Value: "test"},
 					{Name: "name1", Value: "value2"},
 				},
 				Samples: []prompb.Sample{
@@ -208,7 +210,7 @@ func TestSQLDropMetricChunk(t *testing.T) {
 			},
 			{
 				Labels: []prompb.Label{
-					{Name: metricNameLabelName, Value: "test"},
+					{Name: MetricNameLabelName, Value: "test"},
 					{Name: "name1", Value: "value3"},
 				},
 				Samples: []prompb.Sample{
