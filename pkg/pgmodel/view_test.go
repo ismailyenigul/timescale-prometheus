@@ -28,7 +28,7 @@ func TestSQLView(t *testing.T) {
 		t.Skip("skipping integration test")
 	}
 
-	withDB(t, *database, func(db *pgxpool.Pool, t testing.TB) {
+	withDB(t, *testDatabase, func(db *pgxpool.Pool, t testing.TB) {
 		metrics := []prompb.TimeSeries{
 			{
 				Labels: []prompb.Label{
@@ -178,7 +178,7 @@ func TestSQLViewSelectors(t *testing.T) {
 		t.Skip("skipping integration test")
 	}
 
-	withDB(t, *database, func(db *pgxpool.Pool, t testing.TB) {
+	withDB(t, *testDatabase, func(db *pgxpool.Pool, t testing.TB) {
 		metrics := []prompb.TimeSeries{
 			{
 				Labels: []prompb.Label{

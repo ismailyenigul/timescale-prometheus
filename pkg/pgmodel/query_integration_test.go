@@ -508,11 +508,11 @@ func TestSQLQuery(t *testing.T) {
 		},
 	}
 
-	withDB(t, *database, func(db *pgxpool.Pool, t testing.TB) {
+	withDB(t, *testDatabase, func(db *pgxpool.Pool, t testing.TB) {
 		// Ingest test dataset.
 		ingestQueryTestDataset(db, t, generateSmallTimeseries())
 		// Getting a read-only connection to ensure read path is idempotent.
-		readOnly := testhelpers.GetReadOnlyConnection(t, *database)
+		readOnly := testhelpers.GetReadOnlyConnection(t, *testDatabase)
 		defer readOnly.Close()
 
 		var tester *testing.T
@@ -885,11 +885,11 @@ func TestPromQL(t *testing.T) {
 		},
 	}
 
-	withDB(t, *database, func(db *pgxpool.Pool, t testing.TB) {
+	withDB(t, *testDatabase, func(db *pgxpool.Pool, t testing.TB) {
 		// Ingest test dataset.
 		ingestQueryTestDataset(db, t, generateLargeTimeseries())
 		// Getting a read-only connection to ensure read path is idempotent.
-		readOnly := testhelpers.GetReadOnlyConnection(t, *database)
+		readOnly := testhelpers.GetReadOnlyConnection(t, *testDatabase)
 		defer readOnly.Close()
 
 		var tester *testing.T

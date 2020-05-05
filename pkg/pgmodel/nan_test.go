@@ -47,7 +47,7 @@ func TestSQLStaleNaN(t *testing.T) {
 		t.Skip("skipping integration test")
 	}
 
-	withDB(t, *database, func(db *pgxpool.Pool, t testing.TB) {
+	withDB(t, *testDatabase, func(db *pgxpool.Pool, t testing.TB) {
 		metricName := "StaleMetric"
 		metrics := []prompb.TimeSeries{
 			{
